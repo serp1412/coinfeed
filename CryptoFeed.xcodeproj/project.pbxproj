@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AF20B24E2CDB6CD0009D8DC4 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = AF20B24D2CDB6CD0009D8DC4 /* SDWebImageSwiftUI */; };
+		AF20B2512CDB6D2B009D8DC4 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = AF20B2502CDB6D2B009D8DC4 /* SkeletonUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		AFA408DD2CDB1A4F004D74A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,7 @@
 		AFA408CC2CDB1A4D004D74A7 /* CryptoFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFA408DC2CDB1A4F004D74A7 /* CryptoFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFA408E62CDB1A4F004D74A7 /* CryptoFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFA408F92CDB1A65004D74A7 /* CryptoFeed.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = CryptoFeed.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF20B24E2CDB6CD0009D8DC4 /* SDWebImageSwiftUI in Frameworks */,
+				AF20B2512CDB6D2B009D8DC4 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +83,7 @@
 		AFA408C32CDB1A4D004D74A7 = {
 			isa = PBXGroup;
 			children = (
+				AFA408F92CDB1A65004D74A7 /* CryptoFeed.playground */,
 				AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */,
 				AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */,
 				AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */,
@@ -112,6 +121,8 @@
 			);
 			name = CryptoFeed;
 			packageProductDependencies = (
+				AF20B24D2CDB6CD0009D8DC4 /* SDWebImageSwiftUI */,
+				AF20B2502CDB6D2B009D8DC4 /* SkeletonUI */,
 			);
 			productName = CryptoFeed;
 			productReference = AFA408CC2CDB1A4D004D74A7 /* CryptoFeed.app */;
@@ -195,6 +206,10 @@
 			);
 			mainGroup = AFA408C32CDB1A4D004D74A7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AF20B24C2CDB6CD0009D8DC4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				AF20B24F2CDB6D2B009D8DC4 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AFA408CD2CDB1A4D004D74A7 /* Products */;
 			projectDirPath = "";
@@ -558,6 +573,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AF20B24C2CDB6CD0009D8DC4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+		AF20B24F2CDB6D2B009D8DC4 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF20B24D2CDB6CD0009D8DC4 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF20B24C2CDB6CD0009D8DC4 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		AF20B2502CDB6D2B009D8DC4 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF20B24F2CDB6D2B009D8DC4 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFA408C42CDB1A4D004D74A7 /* Project object */;
 }
