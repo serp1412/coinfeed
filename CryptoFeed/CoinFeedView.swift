@@ -62,11 +62,14 @@ struct CoinCard: View {
             HStack {
                 ForEach(coin.prices.indices, id: \.self) { index in
                     let price = coin.prices[index]
-                    Text("\(price.platformName): \(price.price, specifier: "%.2f")")
+                    Text("\(price.platformName): $\(price.price, specifier: "%.2f")")
+                        .font(.system(size: 14, weight: .medium))
                 }
             }
-            Text("Market cap: \(coin.marketCap, specifier: "%.2f")")
+            Text("Market cap: $\(coin.marketCap, specifier: "%.2f")")
+                .font(.system(size: 14, weight: .medium))
             Text("Vol (24h): \(coin.volume)")
+                .font(.system(size: 14, weight: .medium))
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 12)

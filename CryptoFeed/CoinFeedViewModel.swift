@@ -5,7 +5,7 @@ struct Coin: Decodable, Identifiable {
     let symbol: String
     let image: String
     let marketCap: Double
-    let volume: Double
+    let volume: Int
     var prices: [CoinPrice] = []
     
     enum CodingKeys: String, CodingKey {
@@ -17,19 +17,25 @@ struct Coin: Decodable, Identifiable {
         case currentPrice = "current_price"
     }
     
+//    init(id: String, symbol: String, image: String, marketCap: Double, volume: Int) {
+//        self.id = id
+//        self.symbol = symbol
+//        self.image = image
+//        self.marketCap = marketCap
+//        self.volume = volume
+//    }
+    
     init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
-            // Decode basic properties
             self.id = try container.decode(String.self, forKey: .id)
             self.symbol = try container.decode(String.self, forKey: .symbol)
             self.image = try container.decode(String.self, forKey: .image)
             self.marketCap = try container.decode(Double.self, forKey: .marketCap)
-            self.volume = try container.decode(Double.self, forKey: .volume)
+            self.volume = try container.decode(Int.self, forKey: .volume)
 
-            // Create a CoinPrice object
             let price = try container.decode(Double.self, forKey: .currentPrice)
-            let coinPrice = CoinPrice(platformName: "CMC", symbol: symbol, price: price, change: nil)
+            let coinPrice = CoinPrice(platformName: "CG", symbol: symbol, price: price, change: nil)
             self.prices = [coinPrice]
     }
 }
@@ -55,12 +61,26 @@ struct CoinPrice: Codable {
 class CoinFeedViewModel: ObservableObject {
     @Published var coins: [Coin] = []
     var api: API = API()
+    var cmcAPI = CMCAPI()
     private var page = 1
     
     func loadCoins() async throws {
         let newCoins = try await api.fetchCoins(page: 1)
+        let cmcPrices = try await cmcAPI.fetchPrices(for: newCoins.map { $0.symbol })
+        let modifiedCoins = newCoins.map {
+            guard let cmcPrice = cmcPrices[$0.symbol.uppercased()] else {
+                return $0
+            }
+            
+            var coin = $0
+            coin.prices.append(cmcPrice)
+            
+            return coin
+        }
+        
         await MainActor.run {
-            coins.append(contentsOf: newCoins)
+            coins.append(contentsOf: modifiedCoins)
+            page += 1
         }
     }
 }
