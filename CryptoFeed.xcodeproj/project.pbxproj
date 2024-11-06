@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		AFA408DD2CDB1A4F004D74A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFA408C42CDB1A4D004D74A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFA408CB2CDB1A4D004D74A7;
+			remoteInfo = CryptoFeed;
+		};
+		AFA408E72CDB1A4F004D74A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFA408C42CDB1A4D004D74A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFA408CB2CDB1A4D004D74A7;
+			remoteInfo = CryptoFeed;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AFA408CC2CDB1A4D004D74A7 /* CryptoFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFA408DC2CDB1A4F004D74A7 /* CryptoFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFA408E62CDB1A4F004D74A7 /* CryptoFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CryptoFeed;
+			sourceTree = "<group>";
+		};
+		AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CryptoFeedTests;
+			sourceTree = "<group>";
+		};
+		AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CryptoFeedUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFA408C92CDB1A4D004D74A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408D92CDB1A4F004D74A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408E32CDB1A4F004D74A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFA408C32CDB1A4D004D74A7 = {
+			isa = PBXGroup;
+			children = (
+				AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */,
+				AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */,
+				AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */,
+				AFA408CD2CDB1A4D004D74A7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFA408CD2CDB1A4D004D74A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFA408CC2CDB1A4D004D74A7 /* CryptoFeed.app */,
+				AFA408DC2CDB1A4F004D74A7 /* CryptoFeedTests.xctest */,
+				AFA408E62CDB1A4F004D74A7 /* CryptoFeedUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFA408CB2CDB1A4D004D74A7 /* CryptoFeed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFA408F02CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeed" */;
+			buildPhases = (
+				AFA408C82CDB1A4D004D74A7 /* Sources */,
+				AFA408C92CDB1A4D004D74A7 /* Frameworks */,
+				AFA408CA2CDB1A4D004D74A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */,
+			);
+			name = CryptoFeed;
+			packageProductDependencies = (
+			);
+			productName = CryptoFeed;
+			productReference = AFA408CC2CDB1A4D004D74A7 /* CryptoFeed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AFA408DB2CDB1A4F004D74A7 /* CryptoFeedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFA408F32CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeedTests" */;
+			buildPhases = (
+				AFA408D82CDB1A4F004D74A7 /* Sources */,
+				AFA408D92CDB1A4F004D74A7 /* Frameworks */,
+				AFA408DA2CDB1A4F004D74A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFA408DE2CDB1A4F004D74A7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */,
+			);
+			name = CryptoFeedTests;
+			packageProductDependencies = (
+			);
+			productName = CryptoFeedTests;
+			productReference = AFA408DC2CDB1A4F004D74A7 /* CryptoFeedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AFA408E52CDB1A4F004D74A7 /* CryptoFeedUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFA408F62CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeedUITests" */;
+			buildPhases = (
+				AFA408E22CDB1A4F004D74A7 /* Sources */,
+				AFA408E32CDB1A4F004D74A7 /* Frameworks */,
+				AFA408E42CDB1A4F004D74A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFA408E82CDB1A4F004D74A7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */,
+			);
+			name = CryptoFeedUITests;
+			packageProductDependencies = (
+			);
+			productName = CryptoFeedUITests;
+			productReference = AFA408E62CDB1A4F004D74A7 /* CryptoFeedUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFA408C42CDB1A4D004D74A7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					AFA408CB2CDB1A4D004D74A7 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					AFA408DB2CDB1A4F004D74A7 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = AFA408CB2CDB1A4D004D74A7;
+					};
+					AFA408E52CDB1A4F004D74A7 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = AFA408CB2CDB1A4D004D74A7;
+					};
+				};
+			};
+			buildConfigurationList = AFA408C72CDB1A4D004D74A7 /* Build configuration list for PBXProject "CryptoFeed" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFA408C32CDB1A4D004D74A7;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AFA408CD2CDB1A4D004D74A7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFA408CB2CDB1A4D004D74A7 /* CryptoFeed */,
+				AFA408DB2CDB1A4F004D74A7 /* CryptoFeedTests */,
+				AFA408E52CDB1A4F004D74A7 /* CryptoFeedUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFA408CA2CDB1A4D004D74A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408DA2CDB1A4F004D74A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408E42CDB1A4F004D74A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFA408C82CDB1A4D004D74A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408D82CDB1A4F004D74A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA408E22CDB1A4F004D74A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFA408DE2CDB1A4F004D74A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFA408CB2CDB1A4D004D74A7 /* CryptoFeed */;
+			targetProxy = AFA408DD2CDB1A4F004D74A7 /* PBXContainerItemProxy */;
+		};
+		AFA408E82CDB1A4F004D74A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFA408CB2CDB1A4D004D74A7 /* CryptoFeed */;
+			targetProxy = AFA408E72CDB1A4F004D74A7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AFA408EE2CDB1A4F004D74A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AFA408EF2CDB1A4F004D74A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFA408F12CDB1A4F004D74A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoFeed/Preview Content\"";
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AFA408F22CDB1A4F004D74A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CryptoFeed/Preview Content\"";
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AFA408F42CDB1A4F004D74A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoFeed.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CryptoFeed";
+			};
+			name = Debug;
+		};
+		AFA408F52CDB1A4F004D74A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CryptoFeed.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CryptoFeed";
+			};
+			name = Release;
+		};
+		AFA408F72CDB1A4F004D74A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CryptoFeed;
+			};
+			name = Debug;
+		};
+		AFA408F82CDB1A4F004D74A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV366LU3W2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beardedapps.CryptoFeedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CryptoFeed;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFA408C72CDB1A4D004D74A7 /* Build configuration list for PBXProject "CryptoFeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFA408EE2CDB1A4F004D74A7 /* Debug */,
+				AFA408EF2CDB1A4F004D74A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFA408F02CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFA408F12CDB1A4F004D74A7 /* Debug */,
+				AFA408F22CDB1A4F004D74A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFA408F32CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFA408F42CDB1A4F004D74A7 /* Debug */,
+				AFA408F52CDB1A4F004D74A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFA408F62CDB1A4F004D74A7 /* Build configuration list for PBXNativeTarget "CryptoFeedUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFA408F72CDB1A4F004D74A7 /* Debug */,
+				AFA408F82CDB1A4F004D74A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFA408C42CDB1A4D004D74A7 /* Project object */;
+}
