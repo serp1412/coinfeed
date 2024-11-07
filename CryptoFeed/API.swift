@@ -1,5 +1,100 @@
 import Foundation
 
+class OKXWebSocketManager {
+    
+    struct SocketUpdate: Decodable {
+        struct Data: Decodable {
+            let id: String
+            let lastPrice: String
+            
+            enum CodingKeys: String, CodingKey {
+                case id = "instId"
+                case lastPrice = "last"
+            }
+        }
+        let data: [Data]
+    }
+    
+    private let webSocketURL = URL(string: "wss://ws.okx.com:8443/ws/v5/public")!
+    private var webSocketTask: URLSessionWebSocketTask?
+    var onUpdate: (_ price: CoinPrice) -> Void = { _ in }
+    
+    func connect() {
+        let urlSession = URLSession(configuration: .default)
+        webSocketTask = urlSession.webSocketTask(with: webSocketURL)
+        webSocketTask?.resume()
+        
+        subscribe(to: "BTC-USDT")
+        receiveMessage()
+    }
+    
+    func subscribe(to currencyPair: String) {
+        let subscribeMessage: [String: Any] = [
+            "op": "subscribe",
+            "args": [
+                ["channel": "tickers", "instId": currencyPair]
+            ]
+        ]
+        sendMessage(subscribeMessage)
+    }
+    
+    func unsubscribe(from currencyPair: String) {
+        let unsubscribeMessage: [String: Any] = [
+            "op": "unsubscribe",
+            "args": [
+                ["channel": "tickers", "instId": currencyPair]
+            ]
+        ]
+        sendMessage(unsubscribeMessage)
+    }
+    
+    private func sendMessage(_ message: [String: Any]) {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: message, options: [])
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? ""
+            webSocketTask?.send(.string(jsonString)) { error in
+                if let error = error {
+                    print("WebSocket send error: \(error)")
+                }
+            }
+        } catch {
+            print("JSON Serialization error: \(error)")
+        }
+    }
+    
+    private func receiveMessage() {
+        webSocketTask?.receive { [weak self] result in
+            switch result {
+            case .success(let message):
+                switch message {
+                case .string(let text):
+//                    print("Received message: \(text)")
+                    if  let jsonData = text.data(using: .utf8),
+                        let update = try? JSONDecoder().decode(SocketUpdate.self, from: jsonData).data.first,
+                        let price = Double(update.lastPrice),
+                        let symbol = update.id.components(separatedBy: "-").first {
+                        
+                        self?.onUpdate(.init(platformName: "OKX", symbol: symbol, price: price, change: nil))
+                    }
+//                case .data(let data):
+//                    print("Received data: \(data)")
+                default:
+                    print("Received unknown message")
+                }
+                
+                self?.receiveMessage()
+                
+            case .failure(let error):
+                print("WebSocket receive error: \(error)")
+            }
+        }
+    }
+    
+    func disconnect() {
+        webSocketTask?.cancel(with: .goingAway, reason: nil)
+    }
+}
+
 protocol PlatformAPIType {
     func fetchPrice(for currency: String) async throws -> CoinPrice
     func fetchPrices(for currencies: [String]) async throws -> [String: CoinPrice]

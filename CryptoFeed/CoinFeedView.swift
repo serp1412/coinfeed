@@ -7,16 +7,22 @@ struct CoinFeedView: View {
     @StateObject var viewModel = CoinFeedViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack {
-                LazyVStack {
-                    ForEach(viewModel.coins) { coin in
-                        CoinCard(coin: coin)
-                            .frame(maxWidth: .infinity)
+        ZStack {
+            if viewModel.loadedData {
+                ScrollView {
+                    VStack {
+                        LazyVStack {
+                            ForEach(viewModel.coins) { coin in
+                                CoinCard(coin: coin)
+                                    .frame(maxWidth: .infinity)
+                            }
+                        }
                     }
+                    .padding()
                 }
+            } else {
+                ProgressView()
             }
-            .padding()
         }
         .onAppear {
             viewModel.api = api
@@ -54,16 +60,15 @@ struct CoinCard: View {
                 .frame(width: 50, height: 50)
                 Text(coin.symbol.uppercased())
                     .font(.system(size: 14, weight: .medium))
+                if let bestPrice = coin.bestPrice {
+                    PriceLabel(price: bestPrice, font: .system(size: 14, weight: .bold))
+                }
                 Spacer()
-//                Text(child.name)
-//                    .font(.custom("Poppins-Regular", size: 18))
-//                    .foregroundStyle(Color.text.black100)
             }
             HStack {
                 ForEach(coin.prices.indices, id: \.self) { index in
                     let price = coin.prices[index]
-                    Text("\(price.platformName): $\(price.price, specifier: "%.2f")")
-                        .font(.system(size: 14, weight: .medium))
+                    PriceLabel(price: price)
                 }
             }
             Text("Market cap: $\(coin.marketCap, specifier: "%.2f")")
@@ -77,5 +82,17 @@ struct CoinCard: View {
             .shadow(color: .black.opacity(0.2), radius: 2, y: 1)
         )
         .frame(maxWidth: .infinity)
+    }
+}
+
+struct PriceLabel: View {
+    var price: CoinPrice
+    var font: Font = .system(size: 12, weight: .medium)
+    
+    var body: some View {
+        Text("\(price.platformName): ")
+            .font(font) + Text("$\(price.price, specifier: "%.2f")")
+            .font(font)
+            .foregroundStyle(price.color)
     }
 }

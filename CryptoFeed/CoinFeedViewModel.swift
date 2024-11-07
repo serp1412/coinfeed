@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct Coin: Decodable, Identifiable {
     let id: String
@@ -7,6 +8,10 @@ struct Coin: Decodable, Identifiable {
     let marketCap: Double
     let volume: Int
     var prices: [CoinPrice] = []
+    
+    var bestPrice: CoinPrice? {
+        return prices.sorted { $0.price > $1.price }.last
+    }
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -17,26 +22,18 @@ struct Coin: Decodable, Identifiable {
         case currentPrice = "current_price"
     }
     
-//    init(id: String, symbol: String, image: String, marketCap: Double, volume: Int) {
-//        self.id = id
-//        self.symbol = symbol
-//        self.image = image
-//        self.marketCap = marketCap
-//        self.volume = volume
-//    }
-    
     init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            
-            self.id = try container.decode(String.self, forKey: .id)
-            self.symbol = try container.decode(String.self, forKey: .symbol)
-            self.image = try container.decode(String.self, forKey: .image)
-            self.marketCap = try container.decode(Double.self, forKey: .marketCap)
-            self.volume = try container.decode(Int.self, forKey: .volume)
-
-            let price = try container.decode(Double.self, forKey: .currentPrice)
-            let coinPrice = CoinPrice(platformName: "CG", symbol: symbol, price: price, change: nil)
-            self.prices = [coinPrice]
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.id = try container.decode(String.self, forKey: .id)
+        self.symbol = try container.decode(String.self, forKey: .symbol).uppercased()
+        self.image = try container.decode(String.self, forKey: .image)
+        self.marketCap = try container.decode(Double.self, forKey: .marketCap)
+        self.volume = try container.decode(Int.self, forKey: .volume)
+        
+        let price = try container.decode(Double.self, forKey: .currentPrice)
+        let coinPrice = CoinPrice(platformName: "CG", symbol: symbol, price: price, change: nil)
+        self.prices = [coinPrice]
     }
 }
 
@@ -48,7 +45,12 @@ struct CoinPrice: Codable {
     let platformName: String
     let symbol: String
     let price: Double
-    let change: Change?
+    var change: Change?
+    
+    var color: Color {
+        guard let change else { return .black }
+        return change == .increase ? .green : .red
+    }
     
     enum CodingKeys: String, CodingKey {
         case platformName
@@ -60,15 +62,40 @@ struct CoinPrice: Codable {
 
 class CoinFeedViewModel: ObservableObject {
     @Published var coins: [Coin] = []
+    @Published var loadedData = false
     var api: API = API()
+    let socketManager = OKXWebSocketManager()
     var cmcAPI = CMCAPI()
     private var page = 1
     
     func loadCoins() async throws {
         let newCoins = try await api.fetchCoins(page: 1)
+        socketManager.connect()
+        socketManager.onUpdate = { [weak self] price in
+            guard let index = self?.coins.firstIndex(where: { $0.symbol == price.symbol }),
+                  let coin = self?.coins[index] else { return }
+            
+            DispatchQueue.main.async { [weak self] in
+                var mutableCoin = coin
+                var priceChange: CoinPrice.Change?
+                if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
+                    let removedPrice = mutableCoin.prices.remove(at: index)
+                    priceChange = removedPrice.price > price.price ? .decrease : .increase
+                }
+                var mutablePrice = price
+                mutablePrice.change = priceChange
+                mutableCoin.prices.append(mutablePrice)
+                
+                self?.coins[index] = mutableCoin
+            }
+        }
+        
+        newCoins.forEach { coin in
+            socketManager.subscribe(to: "\(coin.symbol)-USDT")
+        }
         let cmcPrices = try await cmcAPI.fetchPrices(for: newCoins.map { $0.symbol })
         let modifiedCoins = newCoins.map {
-            guard let cmcPrice = cmcPrices[$0.symbol.uppercased()] else {
+            guard let cmcPrice = cmcPrices[$0.symbol] else {
                 return $0
             }
             
@@ -81,6 +108,7 @@ class CoinFeedViewModel: ObservableObject {
         await MainActor.run {
             coins.append(contentsOf: modifiedCoins)
             page += 1
+            loadedData = true
         }
     }
 }
