@@ -1,6 +1,6 @@
 import Foundation
 
-class OKXWebSocketManager {
+class OKXWebSocketAPI {
     
     struct SocketUpdate: Decodable {
         struct Data: Decodable {
@@ -23,26 +23,25 @@ class OKXWebSocketManager {
         let urlSession = URLSession(configuration: .default)
         webSocketTask = urlSession.webSocketTask(with: webSocketURL)
         webSocketTask?.resume()
-        
-        subscribe(to: "BTC-USDT")
+
         receiveMessage()
     }
     
-    func subscribe(to currencyPair: String) {
+    func subscribe(to currency: String) {
         let subscribeMessage: [String: Any] = [
             "op": "subscribe",
             "args": [
-                ["channel": "tickers", "instId": currencyPair]
+                ["channel": "tickers", "instId": "\(currency)-USDT"]
             ]
         ]
         sendMessage(subscribeMessage)
     }
     
-    func unsubscribe(from currencyPair: String) {
+    func unsubscribe(from currency: String) {
         let unsubscribeMessage: [String: Any] = [
             "op": "unsubscribe",
             "args": [
-                ["channel": "tickers", "instId": currencyPair]
+                ["channel": "tickers", "instId": "\(currency)-USDT"]
             ]
         ]
         sendMessage(unsubscribeMessage)
@@ -73,7 +72,7 @@ class OKXWebSocketManager {
                         let update = try? JSONDecoder().decode(SocketUpdate.self, from: jsonData).data.first,
                         let price = Double(update.lastPrice),
                         let symbol = update.id.components(separatedBy: "-").first {
-                        
+//                        print("update for symbol \(symbol)")
                         self?.onUpdate(.init(platformName: "OKX", symbol: symbol, price: price, change: nil))
                     }
 //                case .data(let data):
