@@ -1,8 +1,60 @@
 import Foundation
 
-class OKXWebSocketAPI {
+protocol CoinPriceConvertable {
+    func toCoinPrice() -> CoinPrice?
+}
+
+protocol SocketAPIType: AnyObject {
+    associatedtype Message: Decodable, CoinPriceConvertable
+    var webSocketURL: URL { get }
+    var webSocketTask: URLSessionWebSocketTask? { get set }
+    var onUpdate: (_ price: CoinPrice) -> Void { get set }
+    func connect()
+    func subscribe(to currency: String)
+    func unsubscribe(from currency: String)
+    func disconnect()
+}
+
+fileprivate extension SocketAPIType {
+    func sendMessage(_ message: [String: Any]) {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: message, options: [])
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? ""
+            webSocketTask?.send(.string(jsonString)) { error in
+                if let error = error {
+                    print("WebSocket send error: \(error)")
+                }
+            }
+        } catch {
+            print("JSON Serialization error: \(error)")
+        }
+    }
     
-    struct SocketUpdate: Decodable {
+    func receiveMessage() {
+        webSocketTask?.receive { [weak self] result in
+            switch result {
+            case .success(let message):
+                switch message {
+                case .string(let text):
+                    if let jsonData = text.data(using: .utf8),
+                       let coinPrice = try? JSONDecoder().decode(Message.self, from: jsonData).toCoinPrice() {
+                        self?.onUpdate(coinPrice)
+                    }
+                default:
+                    print("Received unknown message")
+                }
+                
+                self?.receiveMessage()
+                
+            case .failure(let error):
+                print("WebSocket receive error: \(error)")
+            }
+        }
+    }
+}
+
+class OKXWebSocketAPI: SocketAPIType {
+    struct SocketUpdate: Decodable, CoinPriceConvertable {
         struct Data: Decodable {
             let id: String
             let lastPrice: String
@@ -13,10 +65,22 @@ class OKXWebSocketAPI {
             }
         }
         let data: [Data]
+        
+        func toCoinPrice() -> CoinPrice? {
+            guard let update = data.first,
+                  let symbol = update.id.components(separatedBy: "-").first,
+                  let price = Double(update.lastPrice) else {
+                return nil
+            }
+                  
+            return .init(platformName: "OKX", symbol: symbol, price: price, change: nil)
+        }
     }
     
-    private let webSocketURL = URL(string: "wss://ws.okx.com:8443/ws/v5/public")!
-    private var webSocketTask: URLSessionWebSocketTask?
+    typealias Message = SocketUpdate
+    
+    internal let webSocketURL = URL(string: "wss://ws.okx.com:8443/ws/v5/public")!
+    internal var webSocketTask: URLSessionWebSocketTask?
     var onUpdate: (_ price: CoinPrice) -> Void = { _ in }
     
     func connect() {
@@ -45,48 +109,6 @@ class OKXWebSocketAPI {
             ]
         ]
         sendMessage(unsubscribeMessage)
-    }
-    
-    private func sendMessage(_ message: [String: Any]) {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: message, options: [])
-            let jsonString = String(data: jsonData, encoding: .utf8) ?? ""
-            webSocketTask?.send(.string(jsonString)) { error in
-                if let error = error {
-                    print("WebSocket send error: \(error)")
-                }
-            }
-        } catch {
-            print("JSON Serialization error: \(error)")
-        }
-    }
-    
-    private func receiveMessage() {
-        webSocketTask?.receive { [weak self] result in
-            switch result {
-            case .success(let message):
-                switch message {
-                case .string(let text):
-//                    print("Received message: \(text)")
-                    if  let jsonData = text.data(using: .utf8),
-                        let update = try? JSONDecoder().decode(SocketUpdate.self, from: jsonData).data.first,
-                        let price = Double(update.lastPrice),
-                        let symbol = update.id.components(separatedBy: "-").first {
-//                        print("update for symbol \(symbol)")
-                        self?.onUpdate(.init(platformName: "OKX", symbol: symbol, price: price, change: nil))
-                    }
-//                case .data(let data):
-//                    print("Received data: \(data)")
-                default:
-                    print("Received unknown message")
-                }
-                
-                self?.receiveMessage()
-                
-            case .failure(let error):
-                print("WebSocket receive error: \(error)")
-            }
-        }
     }
     
     func disconnect() {
