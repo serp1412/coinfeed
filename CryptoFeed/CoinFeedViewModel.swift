@@ -64,7 +64,7 @@ class CoinFeedViewModel: ObservableObject {
     @Published var coins: [Coin] = []
     @Published var loadedData = false
     @Published var loadingData = false
-    var api: API = API()
+    var api: MainAPIType = API()
     var socketAPIs: [any SocketAPIType] = [OKXWebSocketAPI()]
     var restAPIs: [PlatformAPIType] = [CMCAPI()]
     private var page = 1
@@ -79,7 +79,7 @@ class CoinFeedViewModel: ObservableObject {
             loadingData = true
         }
         do {
-            let newCoins = try await api.fetchCoins(page: page)
+            let newCoins = try await api.fetchCoins(limit: 20, page: page)
             newCoins.forEach { coin in
                 socketAPIs.forEach {
                     $0.subscribe(to: "\(coin.symbol)")
@@ -89,7 +89,7 @@ class CoinFeedViewModel: ObservableObject {
                               let welf = self else { return }
                         
                         DispatchQueue.main.async {
-                            welf.coins[index] = welf.update(coin: coin, with: price)
+                            welf.coins[index] = coin.update(with: price)
                         }
                     }
                 }
@@ -132,14 +132,33 @@ class CoinFeedViewModel: ObservableObject {
                 return $0
             }
 
-            return update(coin: $0, with: price)
+            return $0.update(with: price)
         }
         
         return modifiedCoins
     }
     
-    fileprivate func update(coin: Coin, with price: CoinPrice) -> Coin {
-        var mutableCoin = coin
+//    fileprivate func update(coin: Coin, with price: CoinPrice) -> Coin {
+//        var mutableCoin = coin
+//        
+//        var priceChange: CoinPrice.Change?
+//        if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
+//            let removedPrice = mutableCoin.prices.remove(at: index)
+//            priceChange = removedPrice.price > price.price ? .decrease : .increase
+//        }
+//        
+//        var mutablePrice = price
+//        mutablePrice.change = priceChange
+//        
+//        mutableCoin.prices.append(mutablePrice)
+//        
+//        return mutableCoin
+//    }
+}
+
+extension Coin {
+    func update(with price: CoinPrice) -> Coin {
+        var mutableCoin = self
         
         var priceChange: CoinPrice.Change?
         if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {

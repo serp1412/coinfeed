@@ -4,6 +4,10 @@ import SkeletonUI
 
 struct CoinCard: View {
     var coin: Coin
+    var index: Int
+    var onPriceUpdate: (Coin) -> Void
+    @Environment(\.restAPIs) private var restAPIs
+    @State private var task: Task<Void, Never>?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -42,5 +46,39 @@ struct CoinCard: View {
             .shadow(color: .black.opacity(0.2), radius: 2, y: 1)
         )
         .frame(maxWidth: .infinity)
+        .onAppear {
+//            print("create task for \(coin.symbol)")
+            task = Task {
+                await updatePrices()
+//                print("completed task for \(coin.symbol)")
+            }
+        }
+        .onDisappear {
+            task?.cancel()
+//            print("cancelled task for \(coin.symbol)")
+        }
+    }
+    
+    func updatePrices() async {
+        await withTaskGroup(of: CoinPrice?.self) { taskGroup in
+            var mutableCoin = coin
+            for api in restAPIs.wrappedValue {
+                taskGroup.addTask {
+                    return try? await api.fetchPrice(for: coin.symbol)
+                }
+            }
+            
+            for await price in taskGroup {
+                if let price = price {
+                    mutableCoin = coin.update(with: price)
+                } else {
+                    print("Request failed or returned no data.")
+                }
+            }
+            
+            await MainActor.run {
+                onPriceUpdate(mutableCoin)
+            }
+        }
     }
 }

@@ -2,12 +2,16 @@ import SwiftUI
 
 @main
 struct CryptoFeedApp: App {
-    @StateObject var api: API = API()
+    @State var api: MainAPIType = API()
+    @State var restApis: [PlatformAPIType] = [CMCAPI()]
+    @State var socketAPIs: [any SocketAPIType] = [OKXWebSocketAPI()]
     
     var body: some Scene {
         WindowGroup {
             CoinFeedView()
         }
-        .environmentObject(api)
+        .environment(\.api, $api)
+        .environment(\.restAPIs, $restApis)
+        .environment(\.socketAPIs, $socketAPIs)
     }
 }

@@ -1,8 +1,23 @@
 import SwiftUI
 
 struct CoinFeedView: View {
-    @EnvironmentObject var api: API
+    @Environment(\.api) var api
     @StateObject var viewModel = CoinFeedViewModel()
+    
+    func coinCard(index: Int) -> some View {
+        let coin = viewModel.coins[index]
+        return CoinCard(coin: coin, index: index, onPriceUpdate: { updatedCoin in
+            viewModel.coins[index] = updatedCoin
+        })
+        .frame(maxWidth: .infinity)
+        .onAppear {
+            if index == viewModel.coins.count - 1 {
+                Task {
+                    try await viewModel.loadCoins()
+                }
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -11,16 +26,7 @@ struct CoinFeedView: View {
                     VStack {
                         LazyVStack {
                             ForEach(viewModel.coins.indices, id: \.self) { index in
-                                let coin = viewModel.coins[index]
-                                CoinCard(coin: coin)
-                                    .frame(maxWidth: .infinity)
-                                    .onAppear {
-                                        if index == viewModel.coins.count - 1 {
-                                            Task {
-                                                try await viewModel.loadCoins()
-                                            }
-                                        }
-                                    }
+                                coinCard(index: index)
                             }
                         }
                     }
@@ -31,16 +37,11 @@ struct CoinFeedView: View {
             }
         }
         .onAppear {
-            viewModel.api = api
+            viewModel.api = api.wrappedValue
             viewModel.setup()
             Task {
                 try await viewModel.loadCoins()
             }
         }
     }
-}
-
-#Preview {
-    CoinFeedView()
-        .environmentObject(API())
 }

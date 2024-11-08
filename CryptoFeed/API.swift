@@ -116,12 +116,18 @@ class OKXWebSocketAPI: SocketAPIType {
     }
 }
 
+protocol MainAPIType: APIType {
+    func fetchCoins(limit: Int, page: Int) async throws -> [Coin]
+}
+
 protocol PlatformAPIType {
     func fetchPrice(for currency: String) async throws -> CoinPrice
     func fetchPrices(for currencies: [String]) async throws -> [String: CoinPrice]
 }
 
 class CMCAPI: PlatformAPIType, APIType {
+    private let httpFields : [String: String] = ["X-CMC_PRO_API_KEY" : "6e1040d4-ad3a-4d5f-87a1-7ce62917ec97"]
+    
     fileprivate struct CoinResponse: Codable {
         let data: [String: CoinData]
         
@@ -140,7 +146,20 @@ class CMCAPI: PlatformAPIType, APIType {
     }
     
     func fetchPrice(for currency: String) async throws -> CoinPrice {
-        return .init(platformName: "", symbol: "", price: 2, change: nil)
+        let url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=\(currency)&convert=USD"
+        
+        let coinData: CoinResponse = try await request(with: url,
+                                                       httpFields: httpFields)
+        
+        let coinPrices: [CoinPrice] = coinData.data.map {
+            .init(platformName: "CMC", symbol: $0.key, price: $0.value.quote.USD.price)
+        }
+        
+        guard let price = coinPrices.first else {
+            throw APIError.invalidResponse
+        }
+        
+        return price
     }
     
     func fetchPrices(for currencies: [String]) async throws -> [String: CoinPrice] {
@@ -148,7 +167,7 @@ class CMCAPI: PlatformAPIType, APIType {
         let url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=\(symbols)&convert=USD"
         
         let coinData: CoinResponse = try await request(with: url,
-                                                       httpFields: ["X-CMC_PRO_API_KEY" : "6e1040d4-ad3a-4d5f-87a1-7ce62917ec97"])
+                                                       httpFields: httpFields)
         
         return coinData.data.mapValues { value in
             return .init(platformName: "CMC", symbol: value.symbol, price: value.quote.USD.price, change: nil)
@@ -156,7 +175,7 @@ class CMCAPI: PlatformAPIType, APIType {
     }
 }
 
-class API: ObservableObject, APIType {
+class API: ObservableObject, MainAPIType {
     func fetchCoins(limit: Int = 20, page: Int) async throws -> [Coin] {
         let url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=\(limit)&page=\(page)"
         
