@@ -64,7 +64,7 @@ struct CoinCard: View {
             var mutableCoin = coin
             for api in restAPIs.wrappedValue {
                 taskGroup.addTask {
-                    return try? await api.fetchPrice(for: coin.symbol)
+                    return try? await api.fetchPrice(for: coin)
                 }
             }
             
