@@ -69,14 +69,6 @@ class CoinFeedViewModel: ObservableObject {
     var cmcAPI = CMCAPI()
     private var page = 1
     
-    func coinIsShown(_ coin: Coin) {
-        socketManager.subscribe(to: coin.symbol)
-    }
-    
-    func coinIsHidden(_ coin: Coin) {
-        socketManager.unsubscribe(from: coin.symbol)
-    }
-    
     func setup() {
         socketManager.connect()
     }
@@ -88,42 +80,22 @@ class CoinFeedViewModel: ObservableObject {
         }
         do {
             let newCoins = try await api.fetchCoins(page: page)
-            socketManager.onUpdate = { [weak self] price in
-                guard let index = self?.coins.firstIndex(where: { $0.symbol == price.symbol }),
-                      let coin = self?.coins[index] else { return }
-                
-                DispatchQueue.main.async { [weak self] in
-                    var mutableCoin = coin
-                    var priceChange: CoinPrice.Change?
-                    if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
-                        let removedPrice = mutableCoin.prices.remove(at: index)
-                        priceChange = removedPrice.price > price.price ? .decrease : .increase
-                    }
-                    var mutablePrice = price
-                    mutablePrice.change = priceChange
-                    mutableCoin.prices.append(mutablePrice)
-                    
-                    self?.coins[index] = mutableCoin
-                }
-            }
-            
             newCoins.forEach { coin in
                 socketManager.subscribe(to: "\(coin.symbol)")
             }
-            let cmcPrices = try await cmcAPI.fetchPrices(for: newCoins.map { $0.symbol })
-            let modifiedCoins = newCoins.map {
-                guard let cmcPrice = cmcPrices[$0.symbol] else {
-                    return $0
+            socketManager.onUpdate = { [weak self] price in
+                guard let index = self?.coins.firstIndex(where: { $0.symbol == price.symbol }),
+                      let coin = self?.coins[index],
+                      let welf = self else { return }
+                
+                DispatchQueue.main.async {
+                    welf.coins[index] = welf.update(coin: coin, with: price)
                 }
-                
-                var coin = $0
-                coin.prices.append(cmcPrice)
-                
-                return coin
             }
+            let cmcPrices = try await cmcAPI.fetchPrices(for: newCoins.map { $0.symbol })
             
             await MainActor.run {
-                coins.append(contentsOf: modifiedCoins)
+                coins.append(contentsOf: update(coins: newCoins, with: cmcPrices))
                 page += 1
                 loadedData = true
                 loadingData = false
@@ -132,5 +104,34 @@ class CoinFeedViewModel: ObservableObject {
             print("error =====", error)
         }
        
+    }
+    
+    fileprivate func update(coins: [Coin], with prices: [String: CoinPrice]) -> [Coin] {
+        let modifiedCoins = coins.map {
+            guard let price = prices[$0.symbol] else {
+                return $0
+            }
+
+            return update(coin: $0, with: price)
+        }
+        
+        return modifiedCoins
+    }
+    
+    fileprivate func update(coin: Coin, with price: CoinPrice) -> Coin {
+        var mutableCoin = coin
+        
+        var priceChange: CoinPrice.Change?
+        if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
+            let removedPrice = mutableCoin.prices.remove(at: index)
+            priceChange = removedPrice.price > price.price ? .decrease : .increase
+        }
+        
+        var mutablePrice = price
+        mutablePrice.change = priceChange
+        
+        mutableCoin.prices.append(mutablePrice)
+        
+        return mutableCoin
     }
 }
