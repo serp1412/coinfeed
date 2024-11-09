@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 private struct APIKey: EnvironmentKey {
-    static let defaultValue: Binding<MainAPIType> = .constant(API())
+    static let defaultValue: Binding<MainAPIType> = .constant(MainAPI())
 }
 
 private struct RestAPIsKey: EnvironmentKey {

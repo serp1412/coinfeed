@@ -13,6 +13,15 @@ struct Coin: Decodable, Identifiable {
         return prices.sorted { $0.price > $1.price }.last
     }
     
+    init(id: String, symbol: String, image: String, marketCap: Double, volume: Int, prices: [CoinPrice]) {
+        self.id = id
+        self.symbol = symbol
+        self.image = image
+        self.marketCap = marketCap
+        self.volume = volume
+        self.prices = prices
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case symbol

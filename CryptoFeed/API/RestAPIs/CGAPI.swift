@@ -2,6 +2,11 @@ import Foundation
 
 class CGAPI: PlatformAPIType, APIType {
     let platformName = "CG"
+    let shouldMock: Bool
+    
+    required init(shouldMock: Bool = false) {
+        self.shouldMock = shouldMock
+    }
     
     func fetchPrice(for coin: Coin) async throws -> CoinPrice {
         

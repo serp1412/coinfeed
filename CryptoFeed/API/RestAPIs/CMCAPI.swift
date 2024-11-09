@@ -1,6 +1,12 @@
 import Foundation
 
 class CMCAPI: PlatformAPIType, APIType {
+    let shouldMock: Bool
+    
+    required init(shouldMock: Bool = false) {
+        self.shouldMock = shouldMock
+    }
+    
     let platformName = "CMC"
     private let httpFields : [String: String] = ["X-CMC_PRO_API_KEY" : "6e1040d4-ad3a-4d5f-87a1-7ce62917ec97"]
     

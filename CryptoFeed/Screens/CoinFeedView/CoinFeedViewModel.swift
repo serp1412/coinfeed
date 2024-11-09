@@ -5,7 +5,7 @@ class CoinFeedViewModel: ObservableObject {
     @Published var coins: [Coin] = []
     @Published var loadedData = false
     @Published var loadingData = false
-    var api: MainAPIType = API()
+    var api: MainAPIType = MainAPI()
     var socketAPIs: [any SocketAPIType] = []
     var restAPIs: [PlatformAPIType] = []
     private var page = 1
@@ -61,6 +61,10 @@ class CoinFeedViewModel: ObservableObject {
             }
         } catch {
             print("error =====", error)
+            await MainActor.run {
+                // @todo show error screen
+                loadingData = false
+            }
         }
        
     }

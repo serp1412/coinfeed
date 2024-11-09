@@ -33,6 +33,7 @@
 		AFA408DC2CDB1A4F004D74A7 /* CryptoFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFA408E62CDB1A4F004D74A7 /* CryptoFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFA408F92CDB1A65004D74A7 /* CryptoFeed.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = CryptoFeed.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		AFF054AB2CDF2E600031EC36 /* CryptoFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CryptoFeed.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -83,6 +84,7 @@
 		AFA408C32CDB1A4D004D74A7 = {
 			isa = PBXGroup;
 			children = (
+				AFF054AB2CDF2E600031EC36 /* CryptoFeed.xctestplan */,
 				AFA408F92CDB1A65004D74A7 /* CryptoFeed.playground */,
 				AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */,
 				AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */,

@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "26667E21-92E9-4C9D-AA80-F8CD5A08A489",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CryptoFeed.xcodeproj",
+      "identifier" : "AFA408CB2CDB1A4D004D74A7",
+      "name" : "CryptoFeed"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CryptoFeed.xcodeproj",
+        "identifier" : "AFA408DB2CDB1A4F004D74A7",
+        "name" : "CryptoFeedTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CryptoFeed.xcodeproj",
+        "identifier" : "AFA408E52CDB1A4F004D74A7",
+        "name" : "CryptoFeedUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

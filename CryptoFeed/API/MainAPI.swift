@@ -1,38 +1,12 @@
 import Foundation
 
-protocol CoinPriceConvertable {
-    func toCoinPrice() -> CoinPrice?
-}
-
 protocol MainAPIType: APIType {
     func fetchCoins(limit: Int, page: Int) async throws -> [Coin]
 }
 
-enum APIError: Error {
-    case wrongCode(HTTPURLResponse)
-    case notFound
-    case decodingError
-    case invalidResponse
-    case invalidURL
-}
-
-enum Method {
-    case GET
-    case POST(Data)
-    case PUT(Data)
-    case PATCH(Data)
-    case DELETE
-}
-
-class API: ObservableObject, MainAPIType {
-    func fetchCoins(limit: Int = 20, page: Int) async throws -> [Coin] {
-        let url = "\(Strings.cgBaseURL)/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=\(limit)&page=\(page)"
-        
-        return try await request(with: url)
-    }
-}
-
 protocol APIType {
+    var shouldMock: Bool { get }
+    init(shouldMock: Bool)
     func request<T: Decodable, U: URLProtocol>(
         with url: String,
         method: Method,
@@ -52,6 +26,34 @@ protocol APIType {
     ) async throws
 }
 
+enum APIError: Error {
+    case wrongCode(HTTPURLResponse)
+    case notFound
+    case decodingError
+    case invalidResponse
+    case invalidURL
+}
+
+enum Method {
+    case GET
+    case POST(Data)
+    case PUT(Data)
+    case PATCH(Data)
+    case DELETE
+}
+
+class MainAPI: ObservableObject, MainAPIType {
+    let shouldMock: Bool
+    required init(shouldMock: Bool = false) {
+        self.shouldMock = shouldMock
+    }
+    func fetchCoins(limit: Int = 20, page: Int) async throws -> [Coin] {
+        let url = "\(Strings.cgBaseURL)/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=\(limit)&page=\(page)"
+        
+        return try await request(with: url)
+    }
+}
+
 extension APIType {
     func request<T: Decodable, U: URLProtocol>(
         with url: String,
@@ -69,7 +71,7 @@ extension APIType {
         let (data, response) = try await performRequest(with: url,
                                                         method: method,
                                                         httpFields: httpFields,
-                                                        mockProtocol: mockProtocol,
+                                                        mockProtocol: shouldMock ? mockProtocol : nil,
                                                         reauthenticate: reauthenticate)
         
         if let intercept = intercept, let decision = try await intercept(data, response) {
@@ -95,7 +97,7 @@ extension APIType {
         let (data, response) = try await performRequest(with: url,
                                                         method: method,
                                                         httpFields: httpFields,
-                                                        mockProtocol: mockProtocol,
+                                                        mockProtocol: shouldMock ? mockProtocol : nil,
                                                         reauthenticate: reauthenticate)
         
         if let intercept = intercept {
@@ -164,4 +166,8 @@ extension APIType {
             throw APIError.decodingError
         }
     }
+}
+
+protocol CoinPriceConvertable {
+    func toCoinPrice() -> CoinPrice?
 }
