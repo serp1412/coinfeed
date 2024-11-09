@@ -21,9 +21,7 @@ class MockMainAPI: MainAPIType {
 
 class MockSocketAPI: SocketAPIType {
     struct MockMessage: Decodable, CoinPriceConvertable {
-        func toCoinPrice() -> CryptoFeed.CoinPrice? {
-            .init(platformName: "", symbol: "", price: 2)
-        }
+        func toCoinPrice() -> CoinPrice? { nil }
     }
     
     typealias Message = MockMessage
@@ -32,7 +30,7 @@ class MockSocketAPI: SocketAPIType {
     
     var webSocketTask: URLSessionWebSocketTask? = nil
     
-    var onUpdate: (CryptoFeed.CoinPrice) -> Void = { _ in }
+    var onUpdate: (CoinPrice) -> Void = { _ in }
     
     var didConnect = false
     var subscribedSymbols: [String] = []
@@ -45,27 +43,31 @@ class MockSocketAPI: SocketAPIType {
         subscribedSymbols.append(symbol)
     }
     
-    func unsubscribe(from currency: String) {
-        
-    }
-    
-    func disconnect() {
-        
-    }
+    func unsubscribe(from currency: String) { }
+
+    func disconnect() { }
 }
 
 class MockPlatformAPI: PlatformAPIType {
     var platformName: String = "MockName"
+    var shouldFail = false
     
     var stubbedPrice: CoinPrice = .init(platformName: "", symbol: "", price: 2)
     
-    func fetchPrice(for coin: CryptoFeed.Coin) async throws -> CryptoFeed.CoinPrice {
+    func fetchPrice(for coin: Coin) async throws -> CoinPrice {
+        if shouldFail {
+            throw NSError(domain: "MockPlatformAPIError", code: -1, userInfo: nil)
+        }
+        
         return stubbedPrice
     }
     
     var stubbedPrices: [String: CoinPrice] = [:]
     
     func fetchPrices(for coins: [Coin]) async throws -> [String: CoinPrice] {
+        if shouldFail {
+            throw NSError(domain: "MockPlatformAPIError", code: -1, userInfo: nil)
+        }
         return stubbedPrices
     }
 }

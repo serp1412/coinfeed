@@ -47,11 +47,6 @@
 			path = CryptoFeedTests;
 			sourceTree = "<group>";
 		};
-		AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CryptoFeedUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +83,6 @@
 				AFA408F92CDB1A65004D74A7 /* CryptoFeed.playground */,
 				AFA408CE2CDB1A4D004D74A7 /* CryptoFeed */,
 				AFA408DF2CDB1A4F004D74A7 /* CryptoFeedTests */,
-				AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */,
 				AFA408CD2CDB1A4D004D74A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,9 +159,6 @@
 			);
 			dependencies = (
 				AFA408E82CDB1A4F004D74A7 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				AFA408E92CDB1A4F004D74A7 /* CryptoFeedUITests */,
 			);
 			name = CryptoFeedUITests;
 			packageProductDependencies = (

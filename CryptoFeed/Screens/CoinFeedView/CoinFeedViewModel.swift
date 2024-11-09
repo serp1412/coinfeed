@@ -21,43 +21,15 @@ class CoinFeedViewModel: ObservableObject {
         }
         do {
             let newCoins = try await api.fetchCoins(limit: 20, page: page)
-            newCoins.forEach { coin in
-                socketAPIs.forEach {
-                    $0.subscribe(to: "\(coin.symbol)")
-                    $0.onUpdate = { [weak self] price in
-                        guard let index = self?.coins.firstIndex(where: { $0.symbol == price.symbol }),
-                              let coin = self?.coins[index],
-                              let welf = self else { return }
-                        
-                        DispatchQueue.main.async {
-                            welf.coins[index] = coin.update(with: price)
-                        }
-                    }
-                }
-            }
             
-            await withTaskGroup(of: [String: CoinPrice]?.self) { taskGroup in
-                var modifiedCoins = newCoins
-                for api in restAPIs {
-                    taskGroup.addTask {
-                        return try? await api.fetchPrices(for: newCoins)
-                    }
-                }
-                
-                for await prices in taskGroup {
-                    if let prices = prices {
-                        modifiedCoins = update(coins: modifiedCoins, with: prices)
-                    } else {
-                        print("Request failed or returned no data.")
-                    }
-                }
-                
-                await MainActor.run { [modifiedCoins] in
-                    coins.append(contentsOf: modifiedCoins)
-                    page += 1
-                    loadedData = true
-                    loadingData = false
-                }
+            subscribeSocketAPIs(to: newCoins)
+            let updatedCoins = await loadPricesFromRestAPIs(for: newCoins)
+
+            await MainActor.run {
+                coins.append(contentsOf: updatedCoins)
+                page += 1
+                loadedData = true
+                loadingData = false
             }
         } catch {
             print("error =====", error)
@@ -67,6 +39,44 @@ class CoinFeedViewModel: ObservableObject {
             }
         }
        
+    }
+    
+    fileprivate func subscribeSocketAPIs(to newCoins: [Coin]) {
+        newCoins.forEach { coin in
+            socketAPIs.forEach {
+                $0.subscribe(to: "\(coin.symbol)")
+                $0.onUpdate = { [weak self] price in
+                    guard let index = self?.coins.firstIndex(where: { $0.symbol == price.symbol }),
+                          let coin = self?.coins[index],
+                          let welf = self else { return }
+                    
+                    DispatchQueue.main.async {
+                        welf.coins[index] = coin.update(with: price)
+                    }
+                }
+            }
+        }
+    }
+    
+    fileprivate func loadPricesFromRestAPIs(for newCoins: [Coin]) async -> [Coin] {
+        return await withTaskGroup(of: [String: CoinPrice]?.self) { taskGroup in
+            var modifiedCoins = newCoins
+            for api in restAPIs {
+                taskGroup.addTask {
+                    return try? await api.fetchPrices(for: newCoins)
+                }
+            }
+            
+            for await prices in taskGroup {
+                if let prices = prices {
+                    modifiedCoins = update(coins: modifiedCoins, with: prices)
+                } else {
+                    print("Request failed or returned no data.")
+                }
+            }
+            
+            return modifiedCoins
+        }
     }
     
     fileprivate func update(coins: [Coin], with prices: [String: CoinPrice]) -> [Coin] {

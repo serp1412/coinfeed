@@ -6,6 +6,7 @@ struct CoinCard: View {
     var coin: Coin
     var index: Int
     var onPriceUpdate: (Coin) -> Void
+    @State private var viewModel = CoinCardViewModel()
     @Environment(\.restAPIs) private var restAPIs
     @State private var task: Task<Void, Never>?
     
@@ -49,7 +50,10 @@ struct CoinCard: View {
         .onAppear {
 //            print("create task for \(coin.symbol)")
             task = Task {
-                await updatePrices()
+                let updatedCoin = await viewModel.updatePrices(for: coin)
+                await MainActor.run {
+                    onPriceUpdate(updatedCoin)
+                }
 //                print("completed task for \(coin.symbol)")
             }
         }
@@ -58,27 +62,9 @@ struct CoinCard: View {
 //            print("cancelled task for \(coin.symbol)")
         }
     }
-    
-    func updatePrices() async {
-        await withTaskGroup(of: CoinPrice?.self) { taskGroup in
-            var mutableCoin = coin
-            for api in restAPIs.wrappedValue {
-                taskGroup.addTask {
-                    return try? await api.fetchPrice(for: coin)
-                }
-            }
-            
-            for await price in taskGroup {
-                if let price = price {
-                    mutableCoin = coin.update(with: price)
-                } else {
-                    print("Request failed or returned no data.")
-                }
-            }
-            
-            await MainActor.run {
-                onPriceUpdate(mutableCoin)
-            }
-        }
-    }
+}
+
+#Preview {
+    CoinCard(coin: .init(id: "bitcoin", symbol: "BTC", image: "", marketCap: 222222, volume: 33333, prices: [.init(platformName: "CG", symbol: "BTC", price: 77777)]), index: 0, onPriceUpdate: { _ in })
+        .environment(\.restAPIs, .constant([]))
 }
