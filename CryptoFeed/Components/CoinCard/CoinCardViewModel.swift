@@ -1,7 +1,7 @@
 import SwiftUI
 
 class CoinCardViewModel {
-    var restAPIs: [PlatformAPIType] = []
+    var restAPIs: [RestAPIType] = []
     
     func updatePrices(for coin: Coin) async -> Coin {
        return await withTaskGroup(of: CoinPrice?.self) { taskGroup in

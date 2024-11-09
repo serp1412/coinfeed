@@ -6,27 +6,27 @@ final class CoinFeedViewModelTests: XCTestCase {
     var viewModel: CoinFeedViewModel!
     var mockAPI: MockMainAPI!
     var mockSocketAPI: MockSocketAPI!
-    var mockRestAPI: MockPlatformAPI!
+    var mockRestAPI: MockRestAPI!
     let initialCoins = [
         Coin(id: "bitcoin",
              symbol: "BTC",
              image: "",
              marketCap: 2222,
              volume: 3333,
-             prices: [CoinPrice(platformName: "CG", symbol: "BTC", price: 69999)]),
+             prices: [CoinPrice(platformName: Strings.platform.cg, symbol: "BTC", price: 69999)]),
         Coin(id: "ethereum",
              symbol: "ETH",
              image: "",
              marketCap: 2222,
              volume: 3333,
-             prices: [CoinPrice(platformName: "CG", symbol: "ETH", price: 2777)])]
+             prices: [CoinPrice(platformName: Strings.platform.cg, symbol: "ETH", price: 2777)])]
     
     override func setUp() {
         super.setUp()
         
         mockAPI = MockMainAPI()
         mockSocketAPI = MockSocketAPI()
-        mockRestAPI = MockPlatformAPI()
+        mockRestAPI = MockRestAPI()
         
         viewModel = CoinFeedViewModel()
         viewModel.api = mockAPI
@@ -53,12 +53,12 @@ final class CoinFeedViewModelTests: XCTestCase {
     
     func testLoadCoinsFetchesDataSuccessfully() async {
         // Given
-        let mockOtherRestAPI = MockPlatformAPI()
+        let mockOtherRestAPI = MockRestAPI()
         viewModel.restAPIs = [mockRestAPI, mockOtherRestAPI]
         mockAPI.stubbedCoins = initialCoins
         mockRestAPI.stubbedPrices = [
-            "BTC": CoinPrice(platformName: "CMC", symbol: "BTC", price: 50000),
-            "ETH": CoinPrice(platformName: "CMC", symbol: "ETH", price: 3000)]
+            "BTC": CoinPrice(platformName: Strings.platform.cmc, symbol: "BTC", price: 50000),
+            "ETH": CoinPrice(platformName: Strings.platform.cmc, symbol: "ETH", price: 3000)]
         mockOtherRestAPI.stubbedPrices = [
             "BTC": CoinPrice(platformName: "FX", symbol: "BTC", price: 55555),
             "ETH": CoinPrice(platformName: "FX", symbol: "ETH", price: 2555)]
@@ -80,12 +80,12 @@ final class CoinFeedViewModelTests: XCTestCase {
     
     func testLoadCoinsCorrectlyLoadsNewCoins() async {
         // Given
-        let mockOtherRestAPI = MockPlatformAPI()
+        let mockOtherRestAPI = MockRestAPI()
         viewModel.restAPIs = [mockRestAPI, mockOtherRestAPI]
         mockAPI.stubbedCoins = initialCoins
         mockRestAPI.stubbedPrices = [
-            "BTC": CoinPrice(platformName: "CMC", symbol: "BTC", price: 50000),
-            "ETH": CoinPrice(platformName: "CMC", symbol: "ETH", price: 3000)]
+            "BTC": CoinPrice(platformName: Strings.platform.cmc, symbol: "BTC", price: 50000),
+            "ETH": CoinPrice(platformName: Strings.platform.cmc, symbol: "ETH", price: 3000)]
         mockOtherRestAPI.stubbedPrices = [
             "BTC": CoinPrice(platformName: "FX", symbol: "BTC", price: 55555),
             "ETH": CoinPrice(platformName: "FX", symbol: "ETH", price: 2555)]
@@ -100,13 +100,13 @@ final class CoinFeedViewModelTests: XCTestCase {
                  image: "",
                  marketCap: 2222,
                  volume: 3333,
-                 prices: [CoinPrice(platformName: "CG", symbol: "DOGE", price: 69999)]),
+                 prices: [CoinPrice(platformName: Strings.platform.cg, symbol: "DOGE", price: 69999)]),
             Coin(id: "ripple",
                  symbol: "XRP",
                  image: "",
                  marketCap: 2222,
                  volume: 3333,
-                 prices: [CoinPrice(platformName: "CG", symbol: "XRP", price: 2777)])]
+                 prices: [CoinPrice(platformName: Strings.platform.cg, symbol: "XRP", price: 2777)])]
         
         // When
         do {
@@ -142,7 +142,7 @@ final class CoinFeedViewModelTests: XCTestCase {
         }
         
         // When
-        let updatedPrice = CoinPrice(platformName: "OKX", symbol: "BTC", price: 51000)
+        let updatedPrice = CoinPrice(platformName: Strings.platform.okx, symbol: "BTC", price: 51000)
         mockSocketAPI.onUpdate(updatedPrice)
         sleep(1) // the update happens on a separate thread, so we wait for it to complete
         
@@ -172,7 +172,7 @@ final class CoinFeedViewModelTests: XCTestCase {
         }
         
         // When
-        let updatedPrice = CoinPrice(platformName: "OKX", symbol: "BTC", price: 51000)
+        let updatedPrice = CoinPrice(platformName: Strings.platform.okx, symbol: "BTC", price: 51000)
         mockSocketAPI.onUpdate(updatedPrice)
         sleep(1) // the update happens on a separate thread, so we wait for it to complete
         
@@ -192,7 +192,7 @@ final class CoinFeedViewModelTests: XCTestCase {
                  image: "",
                  marketCap: 2222,
                  volume: 3333,
-                 prices: [.init(platformName: "OKX", symbol: "BTC", price: 40000)])]
+                 prices: [.init(platformName: Strings.platform.okx, symbol: "BTC", price: 40000)])]
         mockAPI.stubbedCoins = coins
         
         // Load coins to set up initial state
@@ -203,7 +203,7 @@ final class CoinFeedViewModelTests: XCTestCase {
         }
         
         // When
-        let updatedPrice = CoinPrice(platformName: "OKX", symbol: "BTC", price: 34000)
+        let updatedPrice = CoinPrice(platformName: Strings.platform.okx, symbol: "BTC", price: 34000)
         mockSocketAPI.onUpdate(updatedPrice)
         sleep(1) // the update happens on a separate thread, so we wait for it to complete
         

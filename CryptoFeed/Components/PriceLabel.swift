@@ -13,5 +13,5 @@ struct PriceLabel: View {
 }
 
 #Preview {
-    PriceLabel(price: .init(platformName: "CG", symbol: "BTC", price: 79999.99))
+    PriceLabel(price: .init(platformName: Strings.platform.cg, symbol: "BTC", price: 79999.99))
 }

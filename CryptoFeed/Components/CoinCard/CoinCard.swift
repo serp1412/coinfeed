@@ -24,7 +24,7 @@ struct CoinCard: View {
                 .clipShape(.circle)
                 .frame(width: 50, height: 50)
                 Text(coin.symbol.uppercased())
-                    .font(.system(size: 14, weight: .medium))
+                    .font(.system(size: 14, weight: .bold))
                 if let bestPrice = coin.bestPrice {
                     PriceLabel(price: bestPrice, font: .system(size: 14, weight: .bold))
                 }
@@ -65,6 +65,6 @@ struct CoinCard: View {
 }
 
 #Preview {
-    CoinCard(coin: .init(id: "bitcoin", symbol: "BTC", image: "", marketCap: 222222, volume: 33333, prices: [.init(platformName: "CG", symbol: "BTC", price: 77777)]), index: 0, onPriceUpdate: { _ in })
+    CoinCard(coin: .init(id: "bitcoin", symbol: "BTC", image: "", marketCap: 222222, volume: 33333, prices: [.init(platformName: Strings.platform.cg, symbol: "BTC", price: 77777)]), index: 0, onPriceUpdate: { _ in })
         .environment(\.restAPIs, .constant([]))
 }

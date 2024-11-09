@@ -20,7 +20,7 @@ class OKXWebSocketAPI: SocketAPIType {
                 return nil
             }
                   
-            return .init(platformName: "OKX", symbol: symbol, price: price, change: nil)
+            return .init(platformName: Strings.platform.okx, symbol: symbol, price: price, change: nil)
         }
     }
     

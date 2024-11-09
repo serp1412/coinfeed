@@ -6,7 +6,7 @@ private struct APIKey: EnvironmentKey {
 }
 
 private struct RestAPIsKey: EnvironmentKey {
-    static let defaultValue: Binding<[PlatformAPIType]> = .constant([])
+    static let defaultValue: Binding<[RestAPIType]> = .constant([])
 }
 
 private struct SocketAPIsKey: EnvironmentKey {
@@ -19,7 +19,7 @@ extension EnvironmentValues {
         set { self[APIKey.self] = newValue }
     }
     
-    var restAPIs: Binding<[PlatformAPIType]> {
+    var restAPIs: Binding<[RestAPIType]> {
         get { self[RestAPIsKey.self] }
         set { self[RestAPIsKey.self] = newValue }
     }

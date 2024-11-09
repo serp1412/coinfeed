@@ -48,7 +48,7 @@ class MockSocketAPI: SocketAPIType {
     func disconnect() { }
 }
 
-class MockPlatformAPI: PlatformAPIType {
+class MockRestAPI: RestAPIType {
     var platformName: String = "MockName"
     var shouldFail = false
     

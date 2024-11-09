@@ -41,7 +41,28 @@ struct Coin: Decodable, Identifiable {
         self.volume = try container.decode(Int.self, forKey: .volume)
         
         let price = try container.decode(Double.self, forKey: .currentPrice)
-        let coinPrice = CoinPrice(platformName: "CG", symbol: symbol, price: price)
+        let coinPrice = CoinPrice(platformName: Strings.platform.cg, symbol: symbol, price: price)
         self.prices = [coinPrice]
+    }
+}
+
+extension Coin {
+    func update(with price: CoinPrice) -> Coin {
+        var mutableCoin = self
+        
+        var priceChange: CoinPrice.Change?
+        if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
+            let removedPrice = mutableCoin.prices.remove(at: index)
+            if price.platformName == Strings.platform.okx {
+                priceChange = removedPrice.price > price.price ? .decrease : .increase
+            }
+        }
+        
+        var mutablePrice = price
+        mutablePrice.change = priceChange
+        
+        mutableCoin.prices.append(mutablePrice)
+        
+        return mutableCoin
     }
 }

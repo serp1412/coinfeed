@@ -4,15 +4,15 @@ import XCTest
 final class CoinCardViewModelTests: XCTestCase {
     
     var viewModel: CoinCardViewModel!
-    var mockRestAPI1: MockPlatformAPI!
-    var mockRestAPI2: MockPlatformAPI!
+    var mockRestAPI1: MockRestAPI!
+    var mockRestAPI2: MockRestAPI!
     
     override func setUp() {
         super.setUp()
         viewModel = CoinCardViewModel()
         
-        mockRestAPI1 = MockPlatformAPI()
-        mockRestAPI2 = MockPlatformAPI()
+        mockRestAPI1 = MockRestAPI()
+        mockRestAPI2 = MockRestAPI()
         
         viewModel.restAPIs = [mockRestAPI1, mockRestAPI2]
     }

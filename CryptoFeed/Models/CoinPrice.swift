@@ -23,3 +23,8 @@ struct CoinPrice: Codable {
         case change
     }
 }
+
+protocol CoinPriceConvertable {
+    func toCoinPrice() -> CoinPrice?
+}
+

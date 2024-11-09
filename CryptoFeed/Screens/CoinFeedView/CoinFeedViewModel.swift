@@ -7,7 +7,7 @@ class CoinFeedViewModel: ObservableObject {
     @Published var loadingData = false
     var api: MainAPIType = MainAPI()
     var socketAPIs: [any SocketAPIType] = []
-    var restAPIs: [PlatformAPIType] = []
+    var restAPIs: [RestAPIType] = []
     private var page = 1
     
     func setup() {
@@ -38,7 +38,6 @@ class CoinFeedViewModel: ObservableObject {
                 loadingData = false
             }
         }
-       
     }
     
     fileprivate func subscribeSocketAPIs(to newCoins: [Coin]) {
@@ -89,26 +88,5 @@ class CoinFeedViewModel: ObservableObject {
         }
         
         return modifiedCoins
-    }
-}
-
-extension Coin {
-    func update(with price: CoinPrice) -> Coin {
-        var mutableCoin = self
-        
-        var priceChange: CoinPrice.Change?
-        if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
-            let removedPrice = mutableCoin.prices.remove(at: index)
-            if price.platformName == "OKX" {
-                priceChange = removedPrice.price > price.price ? .decrease : .increase
-            }
-        }
-        
-        var mutablePrice = price
-        mutablePrice.change = priceChange
-        
-        mutableCoin.prices.append(mutablePrice)
-        
-        return mutableCoin
     }
 }

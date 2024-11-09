@@ -1,7 +1,7 @@
 import Foundation
 
-class CGAPI: PlatformAPIType, APIType {
-    let platformName = "CG"
+class CGAPI: RestAPIType, APIType {
+    let platformName = Strings.platform.cg
     let shouldMock: Bool
     
     required init(shouldMock: Bool = false) {
