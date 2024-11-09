@@ -6,8 +6,8 @@ class CoinFeedViewModel: ObservableObject {
     @Published var loadedData = false
     @Published var loadingData = false
     var api: MainAPIType = API()
-    var socketAPIs: [any SocketAPIType] = [OKXWebSocketAPI()]
-    var restAPIs: [PlatformAPIType] = [CMCAPI()]
+    var socketAPIs: [any SocketAPIType] = []
+    var restAPIs: [PlatformAPIType] = []
     private var page = 1
     
     func setup() {
@@ -85,7 +85,9 @@ extension Coin {
         var priceChange: CoinPrice.Change?
         if let index = mutableCoin.prices.firstIndex(where: { $0.platformName == price.platformName }) {
             let removedPrice = mutableCoin.prices.remove(at: index)
-            priceChange = removedPrice.price > price.price ? .decrease : .increase
+            if price.platformName == "OKX" {
+                priceChange = removedPrice.price > price.price ? .decrease : .increase
+            }
         }
         
         var mutablePrice = price

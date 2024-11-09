@@ -2,6 +2,8 @@ import SwiftUI
 
 struct CoinFeedView: View {
     @Environment(\.api) var api
+    @Environment(\.restAPIs) var restAPIs
+    @Environment(\.socketAPIs) var socketAPIs
     @StateObject var viewModel = CoinFeedViewModel()
     
     func coinCard(index: Int) -> some View {
@@ -38,6 +40,8 @@ struct CoinFeedView: View {
         }
         .onAppear {
             viewModel.api = api.wrappedValue
+            viewModel.restAPIs = restAPIs.wrappedValue
+            viewModel.socketAPIs = socketAPIs.wrappedValue
             viewModel.setup()
             Task {
                 try await viewModel.loadCoins()
