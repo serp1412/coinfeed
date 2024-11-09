@@ -1,5 +1,5 @@
 import XCTest
-@testable import CryptoFeed
+@testable import CoinFeed
 
 final class CoinFeedViewModelTests: XCTestCase {
     

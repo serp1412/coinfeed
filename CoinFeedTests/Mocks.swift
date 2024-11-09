@@ -1,5 +1,5 @@
 import Foundation
-@testable import CryptoFeed
+@testable import CoinFeed
 
 class MockMainAPI: MainAPIType {
     var shouldMock: Bool

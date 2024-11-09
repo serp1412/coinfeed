@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CryptoFeedApp: App {
+struct CoinFeed: App {
     @State var api: MainAPIType = MainAPI()
     @State var restApis: [RestAPIType] = [CMCAPI(), CGAPI()]
     @State var socketAPIs: [any SocketAPIType] = [OKXWebSocketAPI()]

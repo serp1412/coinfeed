@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFA408CB2CDB1A4D004D74A7"
-               BuildableName = "CryptoFeed.app"
-               BlueprintName = "CryptoFeed"
-               ReferencedContainer = "container:CryptoFeed.xcodeproj">
+               BuildableName = "CoinFeed.app"
+               BlueprintName = "CoinFeed"
+               ReferencedContainer = "container:CoinFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:CryptoFeed.xctestplan"
+            reference = "container:../CoinFeed.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -41,9 +41,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFA408DB2CDB1A4F004D74A7"
-               BuildableName = "CryptoFeedTests.xctest"
-               BlueprintName = "CryptoFeedTests"
-               ReferencedContainer = "container:CryptoFeed.xcodeproj">
+               BuildableName = "CoinFeedTests.xctest"
+               BlueprintName = "CoinFeedTests"
+               ReferencedContainer = "container:CoinFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -52,9 +52,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFA408E52CDB1A4F004D74A7"
-               BuildableName = "CryptoFeedUITests.xctest"
-               BlueprintName = "CryptoFeedUITests"
-               ReferencedContainer = "container:CryptoFeed.xcodeproj">
+               BuildableName = "CoinFeedUITests.xctest"
+               BlueprintName = "CoinFeedUITests"
+               ReferencedContainer = "container:CoinFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -74,9 +74,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AFA408CB2CDB1A4D004D74A7"
-            BuildableName = "CryptoFeed.app"
-            BlueprintName = "CryptoFeed"
-            ReferencedContainer = "container:CryptoFeed.xcodeproj">
+            BuildableName = "CoinFeed.app"
+            BlueprintName = "CoinFeed"
+            ReferencedContainer = "container:CoinFeed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -91,9 +91,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AFA408CB2CDB1A4D004D74A7"
-            BuildableName = "CryptoFeed.app"
-            BlueprintName = "CryptoFeed"
-            ReferencedContainer = "container:CryptoFeed.xcodeproj">
+            BuildableName = "CoinFeed.app"
+            BlueprintName = "CoinFeed"
+            ReferencedContainer = "container:CoinFeed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
